@@ -2,6 +2,7 @@ var gulp = require('gulp'),
   nodemon = require('gulp-nodemon'),
   livereload = require('gulp-livereload'),
   stylus = require('gulp-stylus');
+  jade = require('gulp-jade');
 
 gulp.task('stylus', function () {
   gulp.src('./public/css/*.styl')
@@ -9,7 +10,15 @@ gulp.task('stylus', function () {
     .pipe(gulp.dest('./public/css'))
     .pipe(livereload());
 });
+gulp.task('templates', function() {
+  var YOUR_LOCALS = {};
 
+  gulp.src('./lib/*.jade')
+    .pipe(jade({
+      locals: YOUR_LOCALS
+    }))
+    .pipe(gulp.dest('./dist/'))
+});
 gulp.task('watch', function() {
   gulp.watch('./public/css/*.styl', ['stylus']);
 });
